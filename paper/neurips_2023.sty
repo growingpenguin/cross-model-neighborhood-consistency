@@ -1,0 +1,152 @@
+% NeurIPS 2023 Style File
+% Based on official NeurIPS LaTeX style
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{neurips_2023}[2023/05/01 NeurIPS 2023 submission/camera-ready style file]
+
+% Options
+\newif\if@neuripsfinal\@neuripsfinalfalse
+\newif\if@neuripspreprint\@neuripspreprintfalse
+\newif\if@natbib\@natbibtrue
+\DeclareOption{final}{\@neuripsfinaltrue}
+\DeclareOption{preprint}{\@neuripspreprinttrue}
+\DeclareOption{nonatbib}{\@natbibfalse}
+\ProcessOptions\relax
+
+% Fonts and encoding
+\RequirePackage{times}
+
+% Page layout
+\RequirePackage[verbose=true,letterpaper]{geometry}
+\AtBeginDocument{
+  \newgeometry{
+    textheight=9in,
+    textwidth=5.5in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+  }
+  \@ifpackageloaded{fullpage}{\PackageWarning{neurips_2023}{fullpage package detected, please remove}}{}
+}
+
+% Line numbers for review
+\if@neuripsfinal\else
+  \if@neuripspreprint\else
+    \RequirePackage{lineno}
+    \linenumbers
+  \fi
+\fi
+
+% natbib
+\if@natbib
+  \RequirePackage[numbers,sort&compress,square]{natbib}
+\fi
+
+% hyperref
+\RequirePackage{xcolor}
+\definecolor{linkcolor}{rgb}{0.1,0.1,0.4}
+\RequirePackage[colorlinks=true,linkcolor=linkcolor,citecolor=linkcolor,urlcolor=linkcolor]{hyperref}
+\RequirePackage{url}
+
+% Title formatting
+\def\@maketitle{%
+  \vbox to 2.25in{%
+    \vskip 0.5in
+    \begin{center}%
+      {\LARGE\bfseries \@title \par}%
+      \vskip 0.3in
+      \if@neuripsfinal
+        {\large\lineskip .5em%
+         \begin{tabular}[t]{c}%
+           \@author
+         \end{tabular}\par}%
+      \else
+        \if@neuripspreprint
+          {\large\lineskip .5em%
+           \begin{tabular}[t]{c}%
+             \@author
+           \end{tabular}\par}%
+          \vskip 0.15in
+          {\normalsize Preprint. Work in progress.\par}%
+        \else
+          {\large Anonymous Author(s)\par}%
+          \vskip 0.05in
+          {\normalsize Affiliation\par}%
+          {\normalsize Address\par}%
+          {\normalsize \texttt{email}\par}%
+          \vskip 0.15in
+          {\small Submitted to 37th Conference on Neural Information Processing Systems (NeurIPS 2023). Do not distribute.\par}%
+        \fi
+      \fi
+    \end{center}%
+    \vfil
+  }%
+}
+
+% Abstract
+\renewenvironment{abstract}{%
+  \centerline{\large\bfseries Abstract}%
+  \vskip 0.1in
+  \begin{quote}%
+}{%
+  \end{quote}%
+  \vskip 0.1in
+}
+
+% Section formatting
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+  {-2.5ex \@plus -1ex \@minus -.2ex}%
+  {1.3ex \@plus .2ex}%
+  {\normalfont\large\bfseries}%
+}
+
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {-2.25ex\@plus -1ex \@minus -.2ex}%
+  {1ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}%
+}
+
+\renewcommand{\subsubsection}{%
+  \@startsection{subsubsection}{3}{\z@}%
+  {-2ex\@plus -1ex \@minus -.2ex}%
+  {0.75ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}%
+}
+
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}{\z@}%
+  {1.25ex \@plus 1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+
+% Float parameters
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\setcounter{dbltopnumber}{3}
+
+% Footnotes
+\renewcommand{\footnoterule}{%
+  \kern-3\p@
+  \hrule width 2in
+  \kern 2.6\p@
+}
+
+% Captions
+\RequirePackage[font=small,labelfont=bf,labelsep=period]{caption}
+
+% Itemize/enumerate spacing
+\RequirePackage{enumitem}
+\setlist{nosep,leftmargin=*}
+
+\endinput
